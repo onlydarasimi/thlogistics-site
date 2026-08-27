@@ -80,7 +80,7 @@
     color:var(--stamp-red); font-weight:600; margin-bottom:16px;
     display:flex; align-items:center; gap:8px;
   }
-  .eyebrow::before{content:''; width:22px; height:1px; background:var(--stamp-red);}
+  .eyebrow::before{content:none;}
   h1{
     font-size:clamp(34px, 5vw, 58px); line-height:1.02; color:var(--ink);
     margin-bottom:20px;
@@ -95,10 +95,46 @@
     position:relative;
   }
   .route-line .dots::after{
-    content:'⛴'; position:absolute; left:0; top:-9px; font-size:14px;
+    content:''; position:absolute; left:0; top:-9px; width:22px; height:13px;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 30'%3E%3Cpath fill='%235B5B52' d='M4,20 L56,20 L50,27 L10,27 Z'/%3E%3Crect fill='%235B5B52' x='14' y='12' width='7' height='8'/%3E%3Crect fill='%235B5B52' x='22' y='12' width='7' height='8'/%3E%3Crect fill='%235B5B52' x='30' y='12' width='7' height='8'/%3E%3Crect fill='%235B5B52' x='38' y='12' width='7' height='8'/%3E%3Crect fill='%235B5B52' x='25' y='5' width='5' height='7'/%3E%3C/svg%3E");
+    background-size:contain; background-repeat:no-repeat;
     animation:sail 6s linear infinite;
   }
   @keyframes sail{ 0%{left:0%;} 100%{left:94%;} }
+
+  /* small curved-arc route flourishes (plane / lorry) */
+  .mini-arc{position:relative; width:100%; max-width:260px; height:56px; margin:6px 0 4px;}
+  .mini-arc svg{position:absolute; inset:0; width:100%; height:100%; overflow:visible;}
+  .mini-arc .arc-path{fill:none; stroke:var(--paper-line); stroke-width:1.2; stroke-dasharray:3 6;}
+  .mini-arc .arc-icon{
+    position:absolute; top:0; left:0; width:30px; height:12px;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 23.2'%3E%3Cpath fill-rule='evenodd' fill='%235B5B52' d='M60.0,0.9 L59.1,0.0 L53.3,0.3 L48.0,7.7 L7.0,7.8 L1.5,12.0 L0.0,16.9 L3.2,18.9 L19.8,19.0 L49.1,23.2 L50.6,22.4 L50.3,21.4 L43.6,19.1 L54.5,18.3 Z M42.6,11.3 L43.0,10.9 L43.1,10.9 L43.3,10.8 L45.8,10.8 L46.7,11.6 L46.7,13.5 L46.1,14.2 L46.0,14.2 L45.8,14.3 L45.6,14.3 L45.4,14.4 L43.6,14.4 L43.4,14.3 L43.1,14.3 L42.5,13.6 L42.5,13.2 L42.3,13.1 L42.3,12.1 L42.5,12.0 L42.5,11.6 L42.6,11.5 Z M37.5,10.8 L40.0,10.8 L40.7,11.3 L40.7,11.5 L40.9,11.6 L40.9,11.9 L41.0,12.0 L41.0,13.1 L40.9,13.2 L40.9,13.6 L40.2,14.3 L39.9,14.3 L39.8,14.4 L37.8,14.4 L37.6,14.3 L37.2,14.2 L36.9,13.9 L36.9,13.8 L36.7,13.5 L36.7,11.7 L36.8,11.6 L36.8,11.5 Z M31.1,11.3 L31.6,10.9 L31.7,10.9 L31.8,10.8 L34.4,10.8 L35.1,11.5 L35.1,11.7 L35.2,11.9 L35.2,13.3 L35.1,13.5 L34.9,13.9 L34.7,14.2 L34.5,14.2 L34.4,14.3 L34.1,14.3 L34.0,14.4 L32.1,14.4 L32.0,14.3 L31.7,14.3 L31.0,13.6 L31.0,13.3 L30.9,13.2 L30.9,11.9 L31.0,11.7 Z M25.5,11.2 L26.0,10.8 L28.6,10.8 L28.9,11.1 L29.0,11.1 L29.4,11.6 L29.4,13.5 L29.3,13.6 L29.3,13.8 L28.9,14.2 L28.7,14.2 L28.3,14.4 L26.3,14.4 L26.2,14.3 L25.8,14.2 L25.3,13.8 L25.3,13.6 L25.2,13.5 L25.2,13.2 L25.1,13.1 L25.1,12.1 L25.2,12.0 L25.2,11.6 L25.5,11.3 Z M19.4,11.7 L19.6,11.6 L19.6,11.5 L20.1,10.9 L20.2,10.9 L20.4,10.8 L22.8,10.8 L22.9,10.9 L23.1,10.9 L23.6,11.5 L23.6,11.7 L23.7,11.9 L23.7,13.3 L23.6,13.5 L23.6,13.6 L22.9,14.3 L22.7,14.3 L22.5,14.4 L20.6,14.4 L20.5,14.3 L20.2,14.3 L19.7,13.9 L19.7,13.8 L19.4,13.3 Z M13.9,11.3 L14.6,10.8 L17.1,10.8 L17.9,11.6 L17.9,13.5 L17.8,13.6 L17.8,13.8 L17.4,14.2 L17.3,14.2 L16.9,14.4 L14.8,14.4 L14.7,14.3 L14.4,14.3 L13.8,13.6 L13.8,13.1 L13.6,12.9 L13.6,12.1 L13.8,12.0 L13.8,11.6 L13.9,11.5 Z M10.0,9.7 L10.0,14.2 L9.6,14.4 L2.8,14.4 L2.4,14.0 L2.8,13.2 L3.8,12.0 L6.1,9.8 L6.7,9.6 L8.0,9.6 L8.1,9.4 L9.6,9.4 Z'/%3E%3C/svg%3E");
+    background-size:contain; background-repeat:no-repeat;
+    will-change:offset-distance;
+  }
+  .plane-arc .arc-icon{
+    offset-path:path('M6,44 Q130,-6 254,44'); offset-rotate:0deg;
+    transform:scaleX(-1);
+    animation:flyArc 5.5s linear infinite;
+  }
+  @keyframes flyArc{ 0%{offset-distance:0%; opacity:0;} 6%{opacity:1;} 94%{opacity:1;} 100%{offset-distance:100%; opacity:0;} }
+
+  /* straight labeled route, matching the hero style exactly */
+  .mini-route-line{
+    display:flex; align-items:center; gap:10px; font-size:12px; color:var(--text-mute);
+    max-width:340px; margin-top:26px;
+  }
+  .mini-route-line .dots{
+    flex:1; height:1px;
+    background:repeating-linear-gradient(to right, var(--paper-line) 0 6px, transparent 6px 12px);
+    position:relative;
+  }
+  .mini-route-line .dots::after{
+    content:''; position:absolute; left:0; top:-11px; width:24px; height:16px;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 28'%3E%3Crect fill='%235B5B52' x='2' y='8' width='38' height='14'/%3E%3Cpath fill='%235B5B52' d='M40,10 L50,10 L56,16 L56,22 L40,22 Z'/%3E%3Ccircle fill='%235B5B52' cx='12' cy='24' r='4'/%3E%3Ccircle fill='%235B5B52' cx='48' cy='24' r='4'/%3E%3C/svg%3E");
+    background-size:contain; background-repeat:no-repeat;
+    animation:sail 6.5s linear infinite;
+  }
 
   /* manifest document mock */
   .manifest{
@@ -217,6 +253,25 @@
   .service-item p{color:var(--text-mute); font-size:14.5px; max-width:56ch;}
   .service-item .arrow{font-size:20px; color:var(--paper-line); transition:transform .2s, color .2s;}
   .service-item:hover .arrow{transform:translateX(4px); color:var(--stamp-red);}
+
+  /* capability tag hover tooltips */
+  .tag-tip{position:relative; cursor:help;}
+  .tag-tip::after{
+    content:attr(data-tip); position:absolute; bottom:calc(100% + 10px); left:50%;
+    transform:translateX(-50%) translateY(4px);
+    background:var(--ink); color:#fff; padding:10px 13px; border-radius:4px;
+    font-family:'IBM Plex Sans', sans-serif; font-size:12.5px; line-height:1.45;
+    width:220px; text-align:left; white-space:normal;
+    opacity:0; pointer-events:none; transition:opacity .18s ease, transform .18s ease; z-index:30;
+  }
+  .tag-tip::before{
+    content:''; position:absolute; bottom:100%; left:50%; margin-bottom:-1px;
+    transform:translateX(-50%) translateY(4px);
+    border:6px solid transparent; border-top-color:var(--ink);
+    opacity:0; transition:opacity .18s ease, transform .18s ease; z-index:30;
+  }
+  .tag-tip:hover::after, .tag-tip:hover::before{opacity:1; transform:translateX(-50%) translateY(0);}
+  @media (max-width:640px){ .tag-tip::after{width:170px; font-size:11.5px;} }
   @media (max-width:640px){ .service-item{grid-template-columns:44px 1fr;} .service-item .arrow{display:none;} }
 
   /* ---------- PROCESS (real sequence -> justified timeline) ---------- */
@@ -422,6 +477,10 @@
       <div class="eyebrow">What We Handle</div>
       <h2>Every line item on the manifest, covered.</h2>
       <p>From the first booking to the last signature at the port gate — one team, one point of contact.</p>
+      <div class="mini-arc plane-arc reveal" aria-hidden="true">
+        <svg viewBox="0 0 260 56"><path class="arc-path" d="M6,44 Q130,-6 254,44"/></svg>
+        <span class="arc-icon"></span>
+      </div>
     </div>
     <div class="service-list">
       <div class="service-item reveal" style="transition-delay:0.00s">
@@ -456,9 +515,9 @@
       </div>
     </div>
     <div class="reveal" style="margin-top:28px; display:flex; gap:10px; flex-wrap:wrap;">
-      <span class="mono" style="font-size:12px; padding:8px 14px; border:1px solid var(--paper-line); color:var(--text-mute);">Bonded Terminal Operations</span>
-      <span class="mono" style="font-size:12px; padding:8px 14px; border:1px solid var(--paper-line); color:var(--text-mute);">Courier Services</span>
-      <span class="mono" style="font-size:12px; padding:8px 14px; border:1px solid var(--paper-line); color:var(--text-mute);">Shipping Agency</span>
+      <span class="mono tag-tip" data-tip="Secure, customs-bonded storage for cargo awaiting duty payment or further clearance instructions." style="font-size:12px; padding:8px 14px; border:1px solid var(--paper-line); color:var(--text-mute);">Bonded Terminal Operations</span>
+      <span class="mono tag-tip" data-tip="Fast, tracked delivery of documents and parcels — locally within Nigeria and internationally." style="font-size:12px; padding:8px 14px; border:1px solid var(--paper-line); color:var(--text-mute);">Courier Services</span>
+      <span class="mono tag-tip" data-tip="Acting as your local representative for shipping lines and vessel owners at Nigerian ports." style="font-size:12px; padding:8px 14px; border:1px solid var(--paper-line); color:var(--text-mute);">Shipping Agency</span>
     </div>
   </div>
 </section>
@@ -468,6 +527,11 @@
     <div class="section-head reveal">
       <div class="eyebrow">How It Works</div>
       <h2>From booking to your warehouse door.</h2>
+      <div class="mini-route-line reveal" aria-hidden="true">
+        <span class="mono">PORT GATE</span>
+        <div class="dots"></div>
+        <span class="mono">YOUR WAREHOUSE DOOR</span>
+      </div>
     </div>
     <div class="process-track reveal">
       <div class="process-line"><div class="process-line-fill" id="processFill"></div></div>
@@ -594,8 +658,8 @@
   // Fill in these two values from your Supabase project
   // (Project Settings -> API) before this goes live.
   // ============================================================
-  const SUPABASE_URL = 'YOUR_SUPABASE_PROJECT_URL';
-  const SUPABASE_ANON_KEY = 'YOUR_SUPABASE_ANON_KEY';
+  const SUPABASE_URL = 'https://vphbmdkbhcquciziaqze.supabase.co';
+  const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZwaGJtZGtiaGNxdWNpemlhcXplIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODc4NDE2MjgsImV4cCI6MjEwMzQxNzYyOH0.0svX5KU615qKXuV60bre6PkGClhaUR43d_CB0VYTNWc';
 
   const quoteForm = document.getElementById('quoteForm');
   const qStatus = document.getElementById('qStatus');
