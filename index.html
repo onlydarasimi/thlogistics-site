@@ -323,11 +323,28 @@
     -webkit-mask-image:linear-gradient(to right, transparent, black 6%, black 94%, transparent);
     mask-image:linear-gradient(to right, transparent, black 6%, black 94%, transparent);
   }
-  .certs-track{
-    display:flex; gap:24px; width:max-content;
-    animation:certScroll 42s linear infinite;
+
+  .certs-scrub{width:100%; max-width:460px; margin:22px auto 0; padding:0 4px;}
+  .certs-scrub input[type=range]{
+    -webkit-appearance:none; width:100%; height:4px; border-radius:2px;
+    background:var(--paper-line); outline:none; cursor:grab;
   }
-  @keyframes certScroll{ from{transform:translateX(0);} to{transform:translateX(-33.3333%);} }
+  .certs-scrub input[type=range]:active{cursor:grabbing;}
+  .certs-scrub input[type=range]::-webkit-slider-thumb{
+    -webkit-appearance:none; width:22px; height:16px; border-radius:0;
+    background:var(--gold); border:none; cursor:grab;
+    -webkit-mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 28'%3E%3Crect x='2' y='8' width='38' height='14'/%3E%3Cpath d='M40,10 L50,10 L56,16 L56,22 L40,22 Z'/%3E%3Ccircle cx='12' cy='24' r='4'/%3E%3Ccircle cx='48' cy='24' r='4'/%3E%3C/svg%3E");
+    mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 28'%3E%3Crect x='2' y='8' width='38' height='14'/%3E%3Cpath d='M40,10 L50,10 L56,16 L56,22 L40,22 Z'/%3E%3Ccircle cx='12' cy='24' r='4'/%3E%3Ccircle cx='48' cy='24' r='4'/%3E%3C/svg%3E");
+    -webkit-mask-size:contain; mask-size:contain; -webkit-mask-repeat:no-repeat; mask-repeat:no-repeat;
+  }
+  .certs-scrub input[type=range]::-moz-range-thumb{
+    width:22px; height:16px; border-radius:0; background:var(--gold); border:none; cursor:grab;
+    mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 28'%3E%3Crect x='2' y='8' width='38' height='14'/%3E%3Cpath d='M40,10 L50,10 L56,16 L56,22 L40,22 Z'/%3E%3Ccircle cx='12' cy='24' r='4'/%3E%3Ccircle cx='48' cy='24' r='4'/%3E%3C/svg%3E");
+    mask-size:contain; mask-repeat:no-repeat;
+  }
+  .certs-track{
+    display:flex; gap:24px; width:max-content; will-change:transform;
+  }
   .cert-card{
     flex:none; width:220px; border:1px solid var(--paper-line); background:var(--white);
     padding:10px 10px 14px; cursor:pointer; text-align:left; border-radius:2px;
@@ -362,6 +379,7 @@
     font-size:24px; line-height:1; cursor:pointer; display:flex; align-items:center; justify-content:center;
   }
   .cert-lightbox-close:hover{background:rgba(255,255,255,0.18);}
+
   .stats .wrap{display:grid; grid-template-columns:repeat(4,1fr); gap:24px;}
   .stat h3{font-family:'Archivo Black'; font-size:clamp(28px,4vw,44px); margin-bottom:6px;}
   .stat p{font-size:13px; color:#AAB8C4; text-transform:uppercase; letter-spacing:0.06em;}
@@ -671,6 +689,7 @@
       </button>
     </div>
   </div>
+  <div class="certs-scrub"><input type="range" id="certsScrub" min="0" max="1000" value="500" aria-label="Scroll through documents"></div>
 </section>
 
 <div class="cert-lightbox" id="certLightbox" role="dialog" aria-modal="true" aria-hidden="true">
@@ -726,7 +745,7 @@
     </div>
     <div class="foot-wrap">
       <div>© 2026 TH Logistics. All rights reserved.</div>
-      <div class="mono">08169614543 · tunjiadekunle@yahoo.com · Lagos, Nigeria</div>
+      <div class="mono">08169614543 · tunjiadekunle@yahoo.com · Abuja, Nigeria</div>
     </div>
   </div>
 </footer>
@@ -862,6 +881,32 @@
   certLightboxClose.addEventListener('click', closeCertLightbox);
   certLightbox.addEventListener('click', (e) => { if (e.target === certLightbox) closeCertLightbox(); });
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeCertLightbox(); });
+
+  // Scrubber: auto-scrolls by default; grabbing the handle pauses it for manual scrubbing
+  const certsTrack2 = document.getElementById('certsTrack');
+  const certsScrub = document.getElementById('certsScrub');
+  let setWidth = 0, pos = 0, dragging = false, speed = 0.35; // px/frame
+  function measure(){ setWidth = certsTrack2.scrollWidth / 3; }
+  measure(); window.addEventListener('resize', measure);
+  function render(){
+    certsTrack2.style.transform = 'translateX(' + (-pos) + 'px)';
+    certsScrub.value = Math.round((pos % setWidth) / setWidth * 1000);
+  }
+  function tick(){
+    if (!dragging){
+      pos += speed;
+      if (pos >= setWidth) pos -= setWidth;
+      render();
+    }
+    requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+  certsScrub.addEventListener('pointerdown', () => { dragging = true; });
+  certsScrub.addEventListener('input', () => {
+    pos = (certsScrub.value / 1000) * setWidth;
+    render();
+  });
+  window.addEventListener('pointerup', () => { dragging = false; });
 </script>
 
 </body>
