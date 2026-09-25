@@ -406,6 +406,9 @@
     background:var(--white); border:1px solid var(--paper-line); padding:28px;
   }
   .cta-form .field{margin-bottom:16px;}
+  .cta-form .field-row{display:grid; grid-template-columns:1fr 1fr; gap:12px;}
+  .cta-form .field-row .field{margin-bottom:16px;}
+  @media (max-width:480px){ .cta-form .field-row{grid-template-columns:1fr;} }
   .cta-form label{display:block; font-size:12px; text-transform:uppercase; letter-spacing:0.05em; color:var(--text-mute); margin-bottom:6px;}
   .cta-form input, .cta-form select, .cta-form textarea{
     width:100%; border:1px solid var(--paper-line); background:var(--paper);
@@ -729,13 +732,25 @@
       </div>
     </div>
     <form class="cta-form reveal" id="quoteForm">
-      <div class="field"><label>Full Name</label><input type="text" id="qName" required></div>
+      <div class="field-row">
+        <div class="field"><label>First Name</label><input type="text" id="qFirstName" required></div>
+        <div class="field"><label>Last Name</label><input type="text" id="qLastName" required></div>
+      </div>
       <div class="field"><label>Company</label><input type="text" id="qCompany"></div>
-      <div class="field"><label>Phone / Email</label><input type="text" id="qContact" required></div>
+      <div class="field-row">
+        <div class="field"><label>WhatsApp Number</label><input type="tel" id="qWhatsapp" placeholder="e.g. 0816 961 4543" required></div>
+        <div class="field"><label>Email</label><input type="email" id="qEmail" required></div>
+      </div>
       <div class="field"><label>Shipment Type</label>
         <select id="qType"><option>Import</option><option>Export</option><option>Not sure yet</option></select>
       </div>
-      <div class="field"><label>Details</label><textarea id="qDetails" placeholder="Cargo type, origin, destination, timeline..."></textarea></div>
+      <div class="field"><label>Cargo Type</label><input type="text" id="qCargoType" placeholder="e.g. Machinery, textiles, spare parts..."></div>
+      <div class="field-row">
+        <div class="field"><label>Origin</label><input type="text" id="qOrigin" placeholder="e.g. China, UK, USA..."></div>
+        <div class="field"><label>Destination</label><input type="text" id="qDestination" placeholder="e.g. Lagos, Nigeria" required></div>
+      </div>
+      <div class="field"><label>Timeline</label><input type="text" id="qTimeline" placeholder="When do you need this shipped/cleared?"></div>
+      <div class="field"><label>Additional Notes</label><textarea id="qDetails" placeholder="Anything else we should know..."></textarea></div>
       <button type="submit" class="btn btn-primary" style="width:100%; justify-content:center;">Send Request</button>
       <p id="qStatus" style="font-size:13px; margin-top:12px; display:none;"></p>
     </form>
@@ -832,10 +847,16 @@
     qStatus.style.display = 'block';
 
     const payload = {
-      name: document.getElementById('qName').value,
+      first_name: document.getElementById('qFirstName').value,
+      last_name: document.getElementById('qLastName').value,
       company: document.getElementById('qCompany').value,
-      contact: document.getElementById('qContact').value,
+      whatsapp: document.getElementById('qWhatsapp').value,
+      email: document.getElementById('qEmail').value,
       shipment_type: document.getElementById('qType').value,
+      cargo_type: document.getElementById('qCargoType').value,
+      origin: document.getElementById('qOrigin').value,
+      destination: document.getElementById('qDestination').value,
+      timeline: document.getElementById('qTimeline').value,
       details: document.getElementById('qDetails').value
     };
 
