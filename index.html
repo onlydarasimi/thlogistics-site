@@ -68,7 +68,14 @@
   .btn-primary{background:var(--ink); color:var(--white);}
   .btn-primary:hover{box-shadow:0 6px 16px rgba(3,32,74,0.35);}
   .btn-outline{background:transparent; color:var(--ink); border:1.5px solid var(--ink);}
-  @media (max-width: 760px){ .nav-links{display:none;} }
+  @media (max-width: 760px){ .nav-links{display:none;} .nav-whatsapp-note, .nav-whatsapp-arrow{display:none;} }
+
+  .nav-whatsapp-wrap{display:flex; align-items:center; gap:8px;}
+  .nav-whatsapp-note{
+    font-size:12.5px; color:var(--text-mute); white-space:nowrap;
+  }
+  .nav-whatsapp-arrow{color:var(--gold); font-weight:700;}
+  @media (max-width:960px){ .nav-whatsapp-note{display:none;} .nav-whatsapp-arrow{display:none;} }
 
   /* ---------- HERO ---------- */
   .hero{
@@ -331,16 +338,11 @@
   }
   .certs-scrub input[type=range]:active{cursor:grabbing;}
   .certs-scrub input[type=range]::-webkit-slider-thumb{
-    -webkit-appearance:none; width:22px; height:16px; border-radius:0;
-    background:var(--gold); border:none; cursor:grab;
-    -webkit-mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 28'%3E%3Crect x='2' y='8' width='38' height='14'/%3E%3Cpath d='M40,10 L50,10 L56,16 L56,22 L40,22 Z'/%3E%3Ccircle cx='12' cy='24' r='4'/%3E%3Ccircle cx='48' cy='24' r='4'/%3E%3C/svg%3E");
-    mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 28'%3E%3Crect x='2' y='8' width='38' height='14'/%3E%3Cpath d='M40,10 L50,10 L56,16 L56,22 L40,22 Z'/%3E%3Ccircle cx='12' cy='24' r='4'/%3E%3Ccircle cx='48' cy='24' r='4'/%3E%3C/svg%3E");
-    -webkit-mask-size:contain; mask-size:contain; -webkit-mask-repeat:no-repeat; mask-repeat:no-repeat;
+    -webkit-appearance:none; width:16px; height:16px; border-radius:50%;
+    background:var(--gold); border:2px solid var(--ink); cursor:grab;
   }
   .certs-scrub input[type=range]::-moz-range-thumb{
-    width:22px; height:16px; border-radius:0; background:var(--gold); border:none; cursor:grab;
-    mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 28'%3E%3Crect x='2' y='8' width='38' height='14'/%3E%3Cpath d='M40,10 L50,10 L56,16 L56,22 L40,22 Z'/%3E%3Ccircle cx='12' cy='24' r='4'/%3E%3Ccircle cx='48' cy='24' r='4'/%3E%3C/svg%3E");
-    mask-size:contain; mask-repeat:no-repeat;
+    width:16px; height:16px; border-radius:50%; background:var(--gold); border:2px solid var(--ink); cursor:grab;
   }
   .certs-track{
     display:flex; gap:24px; width:max-content; will-change:transform;
@@ -420,7 +422,6 @@
   footer{padding:40px 24px; border-top:1px solid var(--paper-line);}
   .foot-wrap{display:flex; justify-content:space-between; flex-wrap:wrap; gap:16px; font-size:13px; color:var(--text-mute);}
 </style>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 </head>
 <body>
 
@@ -437,7 +438,11 @@
       <a href="#reviews">Clients</a>
       <a href="#quote">Get a Quote</a>
     </nav>
-    <a class="btn btn-primary" href="https://wa.me/2348169614543" target="_blank" rel="noopener">WhatsApp Us</a>
+    <div class="nav-whatsapp-wrap">
+      <span class="nav-whatsapp-note">Contact us for any more details</span>
+      <span class="nav-whatsapp-arrow">→</span>
+      <a class="btn btn-primary" href="https://wa.me/2348169614543" target="_blank" rel="noopener">WhatsApp Us</a>
+    </div>
   </div>
 </header>
 
@@ -447,7 +452,7 @@
     <h1>Your cargo, cleared without the chaos.</h1>
     <p class="lead">TH Logistics handles the paperwork, duties and port procedures for importers and exporters moving goods through Nigeria — so your shipment moves, not your schedule.</p>
     <div class="hero-ctas">
-      <a class="btn btn-primary" href="https://wa.me/2348169614543" target="_blank" rel="noopener">Request a Quote →</a>
+      <a class="btn btn-primary" href="#quote">Request a Quote →</a>
       <a class="btn btn-outline" href="#services">See Our Services</a>
     </div>
     <div class="route-line">
@@ -745,7 +750,7 @@
     </div>
     <div class="foot-wrap">
       <div>© 2026 TH Logistics. All rights reserved.</div>
-      <div class="mono">08169614543 · tunjiadekunle@yahoo.com · Abuja, Nigeria</div>
+      <div class="mono">08169614543 · tunjiadekunle@yahoo.com · Lagos, Nigeria</div>
     </div>
   </div>
 </footer>
@@ -815,12 +820,9 @@
   updateExtraBgs();
 
   // ============================================================
-  // QUOTE FORM -> SUPABASE
-  // Fill in these two values from your Supabase project
-  // (Project Settings -> API) before this goes live.
+  // QUOTE FORM -> GOOGLE SHEETS (via Apps Script Web App)
   // ============================================================
-  const SUPABASE_URL = 'https://vphbmdkbhcquciziaqze.supabase.co';
-  const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZwaGJtZGtiaGNxdWNpemlhcXplIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODc4NDE2MjgsImV4cCI6MjEwMzQxNzYyOH0.0svX5KU615qKXuV60bre6PkGClhaUR43d_CB0VYTNWc';
+  const SHEETS_URL = 'https://script.google.com/macros/s/AKfycbxX32eKDh_8UI4T-kOwx9lwfa6UcFIuMy4j8CN9eiWXxyu7kcHmE7zjYnUtYW3y4Q0q/exec';
 
   const quoteForm = document.getElementById('quoteForm');
   const qStatus = document.getElementById('qStatus');
@@ -834,21 +836,15 @@
       company: document.getElementById('qCompany').value,
       contact: document.getElementById('qContact').value,
       shipment_type: document.getElementById('qType').value,
-      details: document.getElementById('qDetails').value,
-      status: 'new'
+      details: document.getElementById('qDetails').value
     };
 
-    if (SUPABASE_URL === 'YOUR_SUPABASE_PROJECT_URL') {
-      // Config not set up yet — fall back so the form still works
-      qStatus.style.color = 'var(--stamp-red)';
-      qStatus.textContent = "Form isn't fully connected yet — please reach us on WhatsApp above instead.";
-      return;
-    }
-
     try {
-      const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-      const { error } = await supabase.from('quotes').insert([payload]);
-      if (error) throw error;
+      await fetch(SHEETS_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        body: JSON.stringify(payload)
+      });
       qStatus.style.color = 'var(--clear-green)';
       qStatus.textContent = "Thanks — we've received your request and will be in touch shortly.";
       quoteForm.reset();
